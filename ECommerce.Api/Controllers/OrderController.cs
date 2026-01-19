@@ -1,5 +1,5 @@
 using ECommerce.Api.DTOs;
-using ECommerce.Api.Service;
+using ECommerce.Api.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ECommerce.Api.Controller
@@ -51,6 +51,10 @@ namespace ECommerce.Api.Controller
             {
                 await _service.CancelOrderAsync(id);
                 return Ok("Order cancelled");
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Conflict(ex.Message);
             }
             catch (Exception ex)
             {

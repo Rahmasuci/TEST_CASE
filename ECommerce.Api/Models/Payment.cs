@@ -7,7 +7,6 @@ namespace ECommerce.Api.Models
         public string PaymentExternalID { get; set; }
         public decimal Amount { get; set; }
         public DateTimeOffset PaidAt { get; set; }
-        public string Status { get; set; }
 
         public Order Order { get; set; }
     }

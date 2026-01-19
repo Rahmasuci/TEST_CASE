@@ -1,10 +1,9 @@
-using System.Security.Principal;
 using ECommerce.Api.Data;
 using ECommerce.Api.DTOs;
 using ECommerce.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace ECommerce.Api.Service;
+namespace ECommerce.Api.Services;
 
 public class OrderService
 {
@@ -38,7 +37,8 @@ public class OrderService
                 orderItems.Add(new OrderItem
                 {
                     Sku = item.Sku,
-                    Qty = item.Qty
+                    Qty = item.Qty,
+                    Price = item.Price
                 });
             }
 
@@ -76,11 +76,14 @@ public class OrderService
             if (order == null)
                 throw new Exception("Order not found");
 
-            if (order.Status != OrderStatus.Placed && order.Status != OrderStatus.Paid)
-                throw new Exception("Order tidak bisa dibayar");
+            if (order.Status != OrderStatus.Placed)
+                throw new Exception("Order sudah dibayar");
+
+            // if (order.Status != OrderStatus.Placed && order.Status != OrderStatus.Paid)
+            //     throw new Exception("Order tidak bisa dibayar");
 
             //2. valiadsi idempotency
-            var generateExternalID = "PAY-" + OrderID + Guid.NewGuid().ToString().Substring(0, 8);
+            var generateExternalID = "PAY-" + OrderID + "-" + Guid.NewGuid().ToString().Substring(0, 8);
             paymentExternalID ??= generateExternalID;
 
             var existingPayment = await _context.Payments
@@ -143,6 +146,9 @@ public class OrderService
 
             if (order.Status == OrderStatus.Ship)
                 throw new Exception("Order sudah dikirim, tidak bisa di batalkan");
+
+            if (order.Status == OrderStatus.Paid)
+                throw new InvalidOperationException("Order sudah dibayar, cancel tidak diperbolehkan");
 
             if (order.Status == OrderStatus.Cancel)
                 return order;

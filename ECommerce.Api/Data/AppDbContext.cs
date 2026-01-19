@@ -7,8 +7,9 @@ namespace ECommerce.Api.Data
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
 
-        public DbSet<Product> Products => Set<Product>();
+        //public DbSet<Product> Products => Set<Product>();
         public DbSet<Order> Orders => Set<Order>();
+        public DbSet<OrderItem> OrderItems => Set<OrderItem>();
         public DbSet<Inventory> Inventories => Set<Inventory>();
         public DbSet<Payment> Payments => Set<Payment>();
 
@@ -19,6 +20,9 @@ namespace ECommerce.Api.Data
 
             modelBuilder.Entity<Order>()
                 .HasKey(a => a.OrderID);
+
+            modelBuilder.Entity<OrderItem>()
+                .HasKey(a => a.OrderItemID);
 
             modelBuilder.Entity<Inventory>()
                 .HasKey(a => a.InventoryID);

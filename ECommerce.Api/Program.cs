@@ -1,4 +1,6 @@
 using ECommerce.Api.Data;
+using ECommerce.Api.Models;
+using ECommerce.Api.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,6 +14,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
         builder.Configuration.GetConnectionString("DefaultConnection")
     )
 );
+
+builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<InventoryService>();
 
 var app = builder.Build();
 
