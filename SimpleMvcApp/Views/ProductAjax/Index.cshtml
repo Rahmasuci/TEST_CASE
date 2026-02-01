@@ -1,0 +1,118 @@
+@{
+    Layout = "_Layout";
+}
+
+<h1>Product List</h1>
+
+<button id="btn-create" class="btn btn-sm btn-success mb-3">Add Product</button>
+
+<input id="txtSearch" class="form-control" name="keyword" placeholder="Search product name..." />
+<button id="btn-search" class="btn btn-info mt-2">Search</button>
+
+<div id="tableContainer" class="mt-3"></div>
+
+<div class="modal fade" id="formModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle"></h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body" id="modalBody">
+                <!-- form ajax bakal masuk ke sini -->
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <script>
+        function loadTable(page = 1) {
+            let keyword = $("#txtSearch").val();
+
+            $.get("/ProductAjax/LoadTable", {
+                keyword: keyword,
+                page: page
+            }, function (result) {
+                $("#tableContainer").html(result);
+            });
+        }
+
+        $(document).ready(function () {
+
+            loadTable();
+
+            $(document).on("click", "#btn-search", function () {
+                loadTable();
+            });
+
+            $(document).on("click", "#btn-create", function () {
+                $.get("/ProductAjax/Create", function (res) {
+                    $("#modalTitle").text("New Product");
+                    $("#modalBody").html(res);
+                    $("#formModal").modal("show");
+                })
+            });
+
+            $(document).on("submit", "#formCreate", function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "/ProductAjax/Create",
+                    type: "post",
+                    data: $(this).serialize(),
+                    success: function () {
+                        alert("Data berhasim disimpan");
+                        $("#formModal").modal("hide");
+                        loadTable();
+                    }
+                });
+
+            });
+
+            $(document).on("click", ".btn-edit", function () {
+                let id = $(this).data("id");
+
+                $.get("/ProductAjax/Edit", { id }, function (result) {
+                    $("#modalTitle").text("Edit Product");
+                    $("#modalBody").html(result);
+                    $("#formModal").modal("show");
+                });
+
+            });
+
+            $(document).on("submit", "#formEdit", function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: "ProductAjax/Update",
+                    type: "POST",
+                    data: $(this).serialize(),
+                    success: function () {
+                        alert("Data berhasim disimpan");
+                        $("#formModal").modal("hide");
+                        loadTable();
+                    }
+                })
+            })
+
+            $(document).on("click", ".btn-delete", function () {
+                let id = $(this).data("id");
+
+                if (!confirm("Yakin hapus data ini??")) return;
+
+                $.post("ProductAjax/Delete", { id }, function () {
+                    alert("Data berhasil dihapus");
+                    loadTable();
+                });
+
+            });
+        });
+
+
+    </script>
+}

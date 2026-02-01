@@ -1,0 +1,63 @@
+@using SimpleMvcApp.ViewModel
+@model ProductListVm
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+
+<h1>Product List</h1>
+
+<form method="get" asp-action="Index">
+    <input class="form-control" name="keyword" placeholder="Search product name..." />
+    <button class="btn btn-info mt-2" type="submit">Search</button>
+</form>
+
+<br />
+
+@if (!Model.Products.Any())
+{
+    <p>No data</p>
+}
+else
+{
+
+    <table class="table table-bordered">
+        <tr>
+            <th>Action</th>
+            <th>Name</th>
+            <th>Price</th>
+        </tr>
+
+        @foreach (var item in Model.Products)
+        {
+            <tr>
+                <td>
+                    <a class="btn btn-warning btn-sm" asp-controller="Product" asp-action="Edit"
+                        asp-route-id="@item.Id">Edit</a> |
+                    <a class="btn btn-danger btn-sm" asp-controller="Product" asp-action="Delete"
+                        asp-route-id="@item.Id">Delete</a>
+                </td>
+                <td>@item.Name</td>
+                <td>@item.Price</td>
+            </tr>
+        }
+    </table>
+
+    <div>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                @for (int i = 1; i <= Model.TotalPages; i++)
+                {
+                    <li class="page-item">
+                        <a class="page-link" asp-action="Index" asp-route-page="@i" asp-route-pageSize="@Model.PageSize">@i</a>
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+}
+
+<br />
+
+<a class="btn btn-sm btn-success" asp-controller="Product" asp-action="Create">Add Product</a>

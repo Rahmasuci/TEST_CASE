@@ -28,6 +28,9 @@ namespace Healthcare.Api.Application.Services
                 throw new InvalidOperationException("Invalid durasi");
             }
 
+            if (dto.StartTime.Minute % 5 != 0)
+                throw new Exception("StarTime must be multiple of 5");
+
             //2. get doctor timezone
             var doctor = await _context.Doctors.FindAsync(dto.DoctorID)
                 ?? throw new Exception("Doctor not found");

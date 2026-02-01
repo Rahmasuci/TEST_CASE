@@ -1,0 +1,21 @@
+@model Product
+
+
+<h1>Delete Product</h1>
+
+<p>Are u sure want to delete this data??</p>
+
+<ul>
+    <li>
+        <b>Name : </b> @Model.Name
+    </li>
+    <li>
+        <b>Price : </b> @Model.Price
+    </li>
+</ul>
+
+<form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
+    <button type="submit">Yes, Delete</button>
+</form>
+
+<a href="/product">Cancel</a>

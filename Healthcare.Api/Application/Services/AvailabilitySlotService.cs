@@ -24,6 +24,9 @@ namespace Healthcare.Api.Application.Services
                 if (slotMinutes % 5 != 0)
                     throw new Exception("Slot must be multiple of 5");
 
+                if (from > to)
+                    throw new Exception("Range time wrong");
+
                 //2. get doctor timezone
                 var doctor = await _context.Doctors.FindAsync(doctorID)
                     ?? throw new Exception("Doctor not found");

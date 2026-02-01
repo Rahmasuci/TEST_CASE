@@ -1,0 +1,17 @@
+@model Product
+
+<h1>Add Product</h1>
+
+<form method="post">
+    @Html.Partial("_Form", Model)
+
+    <br />
+
+    <button type="submit">Save</button>
+</form>
+
+<a href="/product">Back</a>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
