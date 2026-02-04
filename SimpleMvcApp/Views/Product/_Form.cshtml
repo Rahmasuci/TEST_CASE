@@ -1,13 +1,13 @@
 @model Product
 
 <div>
-    <label>Name</label>
-    <input asp-for="Name" />
+    <label class="form-label">Name</label>
+    <input class="form-control" type="text" asp-for="Name" />
     <span asp-validation-for="Name"></span>
 </div>
 
 <div>
-    <label>Price</label>
-    <input asp-for="Price" />
+    <label class="form-label">Price</label>
+    <input class="form-control" type="number" asp-for=" Price" />
     <span asp-validation-for="Price"></span>
 </div>

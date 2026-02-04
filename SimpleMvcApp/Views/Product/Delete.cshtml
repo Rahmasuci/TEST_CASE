@@ -15,7 +15,7 @@
 </ul>
 
 <form asp-action="DeleteConfirmed" asp-route-id="@Model.Id" method="post">
-    <button type="submit">Yes, Delete</button>
-</form>
+    <button class="btn btn-sm btn-danger" type="submit">Yes, Delete</button>
 
-<a href="/product">Cancel</a>
+    <a class="btn btn-sm btn-secondary" href="/product">Cancel</a>
+</form>
