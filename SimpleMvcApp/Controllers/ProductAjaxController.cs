@@ -58,13 +58,11 @@ namespace SimpleMvcApp.Controllers
             return PartialView("_FormCreate");
         }
 
-
-
         [HttpPost("Create")]
         public IActionResult Create(Product product)
         {
             if (!ModelState.IsValid)
-                return View(product);
+                return BadRequest(ModelState);
 
             _db.Products.Add(product);
             _db.SaveChanges();
@@ -86,6 +84,9 @@ namespace SimpleMvcApp.Controllers
         [HttpPost("Update")]
         public IActionResult Update(Product product)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
             _db.Products.Update(product);
             _db.SaveChanges();
 

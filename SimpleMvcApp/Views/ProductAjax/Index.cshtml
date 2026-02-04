@@ -69,9 +69,18 @@
                         alert("Data berhasim disimpan");
                         $("#formModal").modal("hide");
                         loadTable();
+                    },
+                    error: function (xhr) {
+                        let error = xhr.responseJSON;
+
+                        let html = "";
+                        for (let field in error) {
+                            let message = error[field][0];
+
+                            $(`.field-error[data-field='${field}']`).text(message);
+                        }
                     }
                 });
-
             });
 
             $(document).on("click", ".btn-edit", function () {
@@ -96,6 +105,16 @@
                         alert("Data berhasim disimpan");
                         $("#formModal").modal("hide");
                         loadTable();
+                    },
+                    error: function (xhr) {
+                        let error = xhr.responseJSON;
+
+                        let html = "";
+                        for (let field in error) {
+                            let message = error[field][0];
+
+                            $(`.field-error[data-field='${field}']`).text(message);
+                        }
                     }
                 })
             })

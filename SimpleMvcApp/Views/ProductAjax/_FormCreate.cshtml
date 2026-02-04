@@ -1,10 +1,14 @@
 <form id="formCreate">
     <label class="form-label">Name</label>
-    <input name="Name" class="form-control" />
+    <input type="text" name="Name" class="form-control" />
+    <span class="text-danger small field-error" data-field="Name"> </span>
 
+    <br />
     <label class="form-label">Price</label>
-    <input name="Price" class="form-control" />
+    <input type="number" name="Price" class="form-control" />
+    <span class="text-danger small  field-error" data-field="Price"></span>
 
-
+    <br />
     <button class="btn btn-sm btn-primary mt-3">Save</button>
+    <button class="btn btn-sm btn-secondary mt-3" type="button" data-bs-dismiss="modal">Cancel</button>
 </form>

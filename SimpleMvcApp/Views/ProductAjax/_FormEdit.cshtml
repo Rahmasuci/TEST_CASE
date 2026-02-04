@@ -2,10 +2,15 @@
     <input type="hidden" name="Id" value="@Model.Id">
 
     <label class="form-label">Name</label>
-    <input class="form-control" name="Name" value="@Model.Name">
+    <input type="text" class="form-control" name="Name" value="@Model.Name">
+    <span class="text-danger small field-error" data-field="Name"> </span>
 
+    <br />
     <label class="form-label">Price</label>
-    <input class="form-control" name="Price" value="@Model.Price">
+    <input type="number" class="form-control" name="Price" value="@Model.Price">
+    <span class="text-danger small field-error" data-field="Price"></span>
 
-    <button class="btn btn-sm btn-primary mt-3">Update</button>
+    <br />
+    <button class="btn btn-sm btn-primary mt-3" type="submit">Update</button>
+    <button class="btn btn-sm btn-secondary mt-3" type="button" data-bs-dismiss="modal">Cancel</button>
 </form>
